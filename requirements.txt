@@ -1,4 +1,4 @@
 ccxt
-pandas==2.0.3
-pandas-ta==0.3.14b0
+pandas
+pandas-ta
 requests
