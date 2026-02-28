@@ -1,4 +1,4 @@
 ccxt
-pandas
-pandas-ta
+pandas<2.2.0
+https://github.com/twopirllc/pandas-ta/archive/master.zip
 requests
