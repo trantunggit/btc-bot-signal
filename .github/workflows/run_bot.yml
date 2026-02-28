@@ -1,7 +1,7 @@
 name: BTC Bot Signal
 on:
   schedule:
-    - cron: '0 * * * *' # Chạy vào phút thứ 0 của mỗi giờ
+    - cron: '*/15 * * * *'  # Chạy vào các phút 0, 15, 30, 45 mỗi giờ
   workflow_dispatch: # Cho phép nhấn nút chạy thử
 
 jobs:
