@@ -1,24 +1,39 @@
 name: BTC Bot Signal
+
 permissions:
-  contents: write  # Cực kỳ quan trọng để lưu lịch sử báo lệnh
+  contents: write  # Đúng: Cấp quyền ghi để lưu file history
+
 on:
   schedule:
-    - cron: '*/15 * * * *'  # Chạy vào các phút 0, 15, 30, 45 mỗi giờ
-  workflow_dispatch: # Cho phép nhấn nút chạy thử
+    - cron: '*/15 * * * *'  # Đúng: Chạy mỗi 15 phút
+  workflow_dispatch:        # Đúng: Nút bấm chạy tay
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v3
+
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: '3.9'
+
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: |
+          pip install ccxt pandas requests
+
       - name: Run Bot
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: python bot.py
+
+      - name: Save history
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "actions@github.com"
+          git add last_signal_ts.txt || true
+          git commit -m "Update signal history [skip ci]" || true
+          git push
