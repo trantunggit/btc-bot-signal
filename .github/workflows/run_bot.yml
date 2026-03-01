@@ -1,4 +1,6 @@
 name: BTC Bot Signal
+permissions:
+  contents: write  # Cực kỳ quan trọng để lưu lịch sử báo lệnh
 on:
   schedule:
     - cron: '*/15 * * * *'  # Chạy vào các phút 0, 15, 30, 45 mỗi giờ
